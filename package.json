@@ -8,7 +8,7 @@
 	"license": "MIT",
 	"scripts": {
 		"dev": "nodemon src/index.ts",
-		"format": "prettier --write",
+		"format": "prettier --write .",
 		"lint": "eslint . --ext ts",
 		"lint:fix": "npx eslint --fix ."
 	},
