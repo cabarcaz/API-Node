@@ -13,15 +13,22 @@
 		"lint:fix": "npx eslint --fix ."
 	},
 	"dependencies": {
-		"express": "4.18.2"
+		"@types/uuid": "9.0.2",
+		"bcryptjs": "2.4.3",
+		"express": "4.18.2",
+		"mysql": "2.18.1",
+		"typeorm": "0.3.17",
+		"uuid": "9.0.0"
 	},
 	"devDependencies": {
+		"@types/bcryptjs": "2.4.2",
 		"@types/express": "4.17.17",
 		"@typescript-eslint/eslint-plugin": "5.59.11",
 		"@typescript-eslint/parser": "5.59.11",
 		"eslint": "8.42.0",
 		"nodemon": "2.0.22",
 		"prettier": "2.8.8",
+		"reflect-metadata": "0.1.13",
 		"ts-node": "10.9.1",
 		"typescript": "5.1.3"
 	}
