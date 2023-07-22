@@ -1,9 +1,10 @@
 import databaseBootstrap from '../../../bootstrap/database.bootstrap';
-import { UserEmailInvalidException } from '../domain/exceptions/user.exception';
+import { UserEmailInvalidException, UserNotFoundException } from '../domain/exceptions/user.exception';
 import User from '../domain/user';
 import { UserRepository } from '../domain/user.repository';
 import { EmailVO } from '../domain/value-objects/email.VO';
 import { UserEntity } from './user.entity';
+import { Result, err, ok } from 'neverthrow';
 
 export default class UserInfraestructure implements UserRepository{
 
@@ -31,8 +32,31 @@ export default class UserInfraestructure implements UserRepository{
 	}
 
 
-	listOne(guid: string): Promise<User> {
-		throw new Error('Method not implemented.');
+	async listOne(guid: string): Promise<Result<User, UserNotFoundException>> {
+
+		const repo = databaseBootstrap.dataSource.getRepository(UserEntity)
+		const result = await repo.findOne({ where: { guid } })
+		const emailResult = EmailVO.create(result.email)
+
+		if(emailResult.isErr()){
+			return err(new UserEmailInvalidException())
+		}
+
+		if(!result){
+			return err(new UserNotFoundException())
+		}else{
+			return ok(
+				new User({
+					guid: result.guid,
+					name: result.name,
+					lastname:  result.lastname,
+					email: emailResult.value,
+					password: result.password,
+					refreshToken: result.refreshToken,
+					active: result.active
+				})
+			)
+		}
 	}
 
 	async insert(user: User): Promise<User> {
@@ -49,6 +73,7 @@ export default class UserInfraestructure implements UserRepository{
 		})
 
 		await databaseBootstrap.dataSource.getRepository(UserEntity).save(userInsert)
+
 		return user
 	}
 

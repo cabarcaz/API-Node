@@ -10,4 +10,9 @@ export default class UserApplication{
 	insert(user: User){
 		return this.userRepository.insert(user)
 	}
+
+	list(){
+		return this.userRepository.list()
+	}
+
 }

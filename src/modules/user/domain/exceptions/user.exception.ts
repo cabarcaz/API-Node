@@ -40,4 +40,14 @@ export class UserEmailInvalidException extends DomainException{
 	}
 }
 
+export class UserNotFoundException extends DomainException{
+	constructor(){
+		super(UserNotFoundException.getMessage())
+		this.name = DomainExceptionCode.USER_NOT_FOUND
+	}
+	static getMessage(){
+		return 'User not found'
+	}
+}
+
 
