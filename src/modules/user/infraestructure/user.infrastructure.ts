@@ -1,17 +1,23 @@
 import databaseBootstrap from '../../../bootstrap/database.bootstrap';
+import { UserEmailInvalidException } from '../domain/exceptions/user.exception';
 import User from '../domain/user';
 import { UserRepository } from '../domain/user.repository';
 import { EmailVO } from '../domain/value-objects/email.VO';
 import { UserEntity } from './user.entity';
 
 export default class UserInfraestructure implements UserRepository{
+
 	async list(): Promise<User[]> {
 		const repo = databaseBootstrap.dataSource.getRepository(UserEntity)
 		const result = await repo.find({ where: { active: true } })
 
 		return result.map((el: UserEntity) => {
 			const emailResult = EmailVO.create(el.email)
-			// TODO: pendiente neverthow
+
+			if(emailResult.isErr()) {
+				throw new UserEmailInvalidException
+			}
+
 			return new User({
 				guid: el.guid,
 				name: el.name,
