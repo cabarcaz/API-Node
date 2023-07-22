@@ -1,5 +1,5 @@
 import { IEntity } from '../../shared/entity.interface'
-import { EmailVO } from './value-objects/email.VO'
+import { EmailVO } from './value-objects/email.vo'
 
 // Principio SOLID: Interface segregation
 interface UserRequired{
@@ -15,7 +15,7 @@ interface UserOptional{
 	guid: string
 }
 
-interface UserUpdate{
+export interface UserUpdate{
 	name: string
 	lastname: string
 	password: string

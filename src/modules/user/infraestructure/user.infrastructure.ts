@@ -1,8 +1,8 @@
 import databaseBootstrap from '../../../bootstrap/database.bootstrap';
 import { UserEmailInvalidException, UserNotFoundException } from '../domain/exceptions/user.exception';
-import User from '../domain/user';
+import User, { UserUpdate } from '../domain/user';
 import { UserRepository } from '../domain/user.repository';
-import { EmailVO } from '../domain/value-objects/email.VO';
+import { EmailVO } from '../domain/value-objects/email.vo';
 import { UserEntity } from './user.entity';
 import { Result, err, ok } from 'neverthrow';
 
@@ -30,7 +30,6 @@ export default class UserInfraestructure implements UserRepository{
 			})
 		})
 	}
-
 
 	async listOne(guid: string): Promise<Result<User, UserNotFoundException>> {
 
@@ -78,11 +77,65 @@ export default class UserInfraestructure implements UserRepository{
 	}
 
 
-	update(user: User): Promise<User> {
-		throw new Error('Method not implemented.');
+	async update(guid: string, user: Partial<UserUpdate>): Promise<Result<User, UserNotFoundException>> {
+		const repo = databaseBootstrap.dataSource.getRepository(UserEntity)
+		const userFound = await repo.findOne({
+			where: { guid }
+		})
+
+		if(userFound) {
+			Object.assign(userFound, user)
+			const userEntity = await repo.save(userFound)
+			const emailResult = EmailVO.create(userEntity.email)
+
+			if(emailResult.isErr()){
+				return err(new UserEmailInvalidException())
+			}
+			return ok(
+				new User({
+					guid: userEntity.guid,
+					name: userEntity.name,
+					lastname: userEntity.lastname,
+					email: emailResult.value,
+					password: userEntity.password,
+					refreshToken: userEntity.refreshToken,
+					active: userEntity.active
+				})
+			)
+		}
+
 	}
-	delete(guid: string): Promise<User> {
-		throw new Error('Method not implemented.');
+
+
+	async delete(guid: string): Promise<Result<User, UserNotFoundException>> {
+
+		const repo = databaseBootstrap.dataSource.getRepository(UserEntity)
+		const userFound = await repo.findOne({
+			where: { guid: guid }
+		})
+
+		if(userFound){
+			userFound.active = false
+			const userEntity = await repo.save(userFound)
+			const emailResult = EmailVO.create(userEntity.email)
+
+			if(emailResult.isErr()){
+				return err(new UserEmailInvalidException())
+			}
+			return ok(
+				new User({
+					guid: userEntity.guid,
+					name: userEntity.name,
+					lastname: userEntity.lastname,
+					email: emailResult.value,
+					password: userEntity.password,
+					refreshToken: userEntity.refreshToken,
+					active: userEntity.active
+				})
+			)
+		}else{
+			return err(new UserNotFoundException())
+		}
 	}
 
 }
