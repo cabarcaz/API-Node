@@ -40,6 +40,37 @@ export class UserEmailInvalidException extends DomainException{
 	}
 }
 
+export class UserPasswordRequiredException extends DomainException{
+	constructor(){
+		super(UserPasswordRequiredException.getMessage())
+		this.name = DomainExceptionCode.USER_PASSWORD_REQUIRED
+	}
+	static getMessage() {
+		return 'Password is invalid'
+	}
+}
+
+export class UserPasswordLengthInvalidException extends DomainException {
+	constructor(password: string){
+		super(UserPasswordLengthInvalidException.getMessage(password))
+		this.name = DomainExceptionCode.USER_PASSWORD_LENGTH_INVALID
+	}
+	static getMessage(password: string){
+		return `Password must be more than 4 characters, but '${password}' has only ${password.length}`
+
+	}
+}
+
+export class UserGuidInvalidException extends DomainException{
+	constructor(){
+		super(UserGuidInvalidException.getMessage())
+		this.name = DomainExceptionCode.USER_GUID_INVALID
+	}
+	static getMessage(){
+		return 'Invalid User guid'
+	}
+}
+
 export class UserNotFoundException extends DomainException{
 	constructor(){
 		super(UserNotFoundException.getMessage())
