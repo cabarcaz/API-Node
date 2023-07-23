@@ -3,6 +3,7 @@ import { EmailVO } from '../../domain/value-objects/email.vo';
 import { IError } from '../helper/ierror';
 import UserFactory from '../../domain/user-factory';
 import UserApplication from '../../application/user.application';
+import { UserInsertMapping } from './dto/user-insert.dto';
 
 export  default class {
 	constructor(private application: UserApplication){
@@ -15,7 +16,7 @@ export  default class {
 
 		if(emailResul.isErr()){
 			const err: IError = new Error(emailResul.error.message)
-			err.status = 400
+			err.status = 411
 			return next(err)
 		}
 
@@ -26,11 +27,16 @@ export  default class {
 			return next(err)
 		}else{
 			const data = await this.application.insert(userResult.value)
+			const result = new UserInsertMapping().execute(data.propierties())
+			res.status(201).json(result)
 		}
 
 	}
 
-	async list(req: Request, res: Response){}
+	async list(req: Request, res: Response){
+		const list = await this.application.list()
+		const result =
+	}
 
 	async listOne(req: Request, res: Response){}
 
