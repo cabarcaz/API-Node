@@ -1,4 +1,5 @@
-import User, { UserUpdate } from '../domain/user'
+import { UserUpdate } from '../domain/interfaces/userUpdate.interface'
+import User from '../domain/user'
 import { UserRepository } from '../domain/user.repository'
 
 export default class UserApplication {

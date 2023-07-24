@@ -1,5 +1,7 @@
-import { DomainException, DomainExceptionCode } from './domain.exception'
+import { DomainExceptionCode } from '../enum/domainException'
+import { DomainException } from './domain.exception'
 
+// TODO: Pendiente refactor.
 export class UserNameRequiredException extends DomainException {
 	constructor() {
 		super(UserNameRequiredException.getMessage())

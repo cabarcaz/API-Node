@@ -7,12 +7,11 @@ let appDataSource: DataSource
 
 export default class extends Bootstrap {
 	initialize(): Promise<DataSource> {
-
 		const dbConfig: DB_CONFIG = AppServive.DBConfig
 
 		const AppDataSource = new DataSource({
 			type: 'mysql',
-			...dbConfig
+			...dbConfig,
 		})
 
 		appDataSource = AppDataSource

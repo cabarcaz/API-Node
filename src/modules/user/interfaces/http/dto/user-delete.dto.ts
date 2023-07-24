@@ -1,4 +1,4 @@
-import { UserProperties } from 'src/modules/user/domain/user'
+import { UserProperties } from 'src/modules/user/domain/types/userProperties.type'
 import { DTO } from './dto.generic'
 
 interface UserDTO {

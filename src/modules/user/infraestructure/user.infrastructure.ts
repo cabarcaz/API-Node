@@ -1,6 +1,7 @@
 import databaseBootstrap from '../../../bootstrap/database.bootstrap'
 import { UserEmailInvalidException, UserNotFoundException } from '../domain/exceptions/user.exception'
-import User, { UserUpdate } from '../domain/user'
+import { UserUpdate } from '../domain/interfaces/userUpdate.interface'
+import User from '../domain/user'
 import { UserRepository } from '../domain/user.repository'
 import { EmailVO } from '../domain/value-objects/email.vo'
 import { UserEntity } from './user.entity'
@@ -105,7 +106,7 @@ export default class UserInfraestructure implements UserRepository {
 	async delete(guid: string): Promise<Result<User, UserNotFoundException>> {
 		const repo = databaseBootstrap.dataSource.getRepository(UserEntity)
 		const userFound = await repo.findOne({
-			where: { guid: guid },
+			where: { guid },
 		})
 
 		if (userFound) {
