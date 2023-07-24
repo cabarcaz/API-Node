@@ -9,9 +9,9 @@ export class AppServive {
 		return {
 			host: process.env.BD_HOST || 'localhost',
 			port: +process.env.BD_PORT || 3308,
-			entities: [process.env.DB_ENTITIES || 'src/**/*.entiity.ts'],
+			entities: [process.env.DB_ENTITIES || 'src/**/*.entity.ts'],
 			username: process.env.DB_USER || 'adminUser',
-			password: process.env.DB_PASS || '123456',
+			password: process.env.DB_PASS || '12345',
 			database: process.env.DB_NAME || 'bddcursonode',
 			synchronize: process.env.DB_SYNC === 'true' ? true : false,
 			logging: process.env.DB_LOG === 'true' ? true : false,

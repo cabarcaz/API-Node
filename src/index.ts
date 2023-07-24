@@ -4,14 +4,13 @@ import { Bootstrap } from './bootstrap/base.bootstrap'
 import Application from './app'
 
 const serverBootstrap: Bootstrap = new ServerBootstrap(Application)
-const dataBaseBootstrap: Bootstrap = new DataBaseBootstrap()
+const databaseBootstrap: Bootstrap = new DataBaseBootstrap()
 
-;(async () => {
-	try {
-		await serverBootstrap.initialize()
-		await dataBaseBootstrap.initialize()
-		console.log('Server started successfully')
-	} catch (error) {
-		console.log(error)
-	}
-})()
+	; (async () => {
+		try {
+			await databaseBootstrap.initialize(), console.log('DataBase started successfully');
+			await serverBootstrap.initialize()
+		} catch (error) {
+			console.log(error)
+		}
+	})()
