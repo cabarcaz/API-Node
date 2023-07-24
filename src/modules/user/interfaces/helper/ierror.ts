@@ -1,3 +1,3 @@
-export interface IError extends Error{
+export interface IError extends Error {
 	status?: number
 }

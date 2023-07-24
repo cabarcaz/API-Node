@@ -2,20 +2,20 @@ import { IEntity } from '../../shared/entity.interface'
 import { EmailVO } from './value-objects/email.vo'
 
 // Principio SOLID: Interface segregation
-interface UserRequired{
+interface UserRequired {
 	name: string
 	lastname: string
 	email: EmailVO
 	password: string
 }
 
-interface UserOptional{
+interface UserOptional {
 	refreshToken: string
 	active: boolean
 	guid: string
 }
 
-export interface UserUpdate{
+export interface UserUpdate {
 	name: string
 	lastname: string
 	password: string
@@ -23,7 +23,7 @@ export interface UserUpdate{
 
 export type UserProperties = Required<UserRequired> & Partial<UserOptional>
 
-export default class User implements IEntity<UserProperties, UserUpdate>{
+export default class User implements IEntity<UserProperties, UserUpdate> {
 	private name: string
 	private lastname: string
 	private readonly email: EmailVO
@@ -32,31 +32,28 @@ export default class User implements IEntity<UserProperties, UserUpdate>{
 	private active: boolean
 	private readonly guid: string
 
-	constructor(userProperties: UserProperties){
+	constructor(userProperties: UserProperties) {
 		this.active = true
 		Object.assign(this, userProperties)
 	}
 
-	propierties(): UserProperties{
+	propierties(): UserProperties {
 		return {
 			name: this.name,
-      lastname: this.lastname,
-      email: this.email,
-      password: this.password,
-      refreshToken: this.refreshToken,
-      active: this.active,
-      guid: this.guid
+			lastname: this.lastname,
+			email: this.email,
+			password: this.password,
+			refreshToken: this.refreshToken,
+			active: this.active,
+			guid: this.guid,
 		}
 	}
 
-	update(fields: UserUpdate){
-		Object.assign(this,fields)
+	update(fields: UserUpdate) {
+		Object.assign(this, fields)
 	}
 
-	delete(){
+	delete() {
 		this.active = false
 	}
-
-
 }
-

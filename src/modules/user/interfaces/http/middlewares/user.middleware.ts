@@ -1,9 +1,8 @@
-import { validate } from 'class-validator';
-import { NextFunction, Response, Request } from "express";
-import { UserListOneValidator } from "../validators/userListOne.validator";
+import { validate } from 'class-validator'
+import { NextFunction, Response, Request } from 'express'
+import { UserListOneValidator } from '../validators/userListOne.validator'
 
 class UserMiddleware {
-
 	static async ValidateListOne(req: Request, res: Response, next: NextFunction) {
 		const { guid } = req.params
 		const userListOneValidator = new UserListOneValidator()
@@ -20,5 +19,5 @@ class UserMiddleware {
 }
 
 export const MiddlewareListOne: ((req: Request, res: Response, next: NextFunction) => Promise<void>)[] = [
-	UserMiddleware.ValidateListOne
+	UserMiddleware.ValidateListOne,
 ]

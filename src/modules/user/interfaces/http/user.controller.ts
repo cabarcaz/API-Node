@@ -1,14 +1,14 @@
-import { Request, Response, NextFunction } from 'express';
-import { EmailVO } from '../../domain/value-objects/email.vo';
-import { IError } from '../helper/ierror';
-import UserFactory from '../../domain/user-factory';
-import UserApplication from '../../application/user.application';
-import { UserInsertMapping } from './dto/user-insert.dto';
-import { UserListMapping } from './dto/user-list.dto';
-import { GuidVO } from '../../domain/value-objects/guid.vo';
-import { UserListOneMapping } from './dto/user-list-one.dto';
-import { UserUpdateMapping } from './dto/user-update.dto';
-import { UserDeleteMapping } from './dto/user-delete.dto';
+import { Request, Response, NextFunction } from 'express'
+import { EmailVO } from '../../domain/value-objects/email.vo'
+import { IError } from '../helper/ierror'
+import UserFactory from '../../domain/user-factory'
+import UserApplication from '../../application/user.application'
+import { UserInsertMapping } from './dto/user-insert.dto'
+import { UserListMapping } from './dto/user-list.dto'
+import { GuidVO } from '../../domain/value-objects/guid.vo'
+import { UserListOneMapping } from './dto/user-list-one.dto'
+import { UserUpdateMapping } from './dto/user-update.dto'
+import { UserDeleteMapping } from './dto/user-delete.dto'
 
 export default class {
 	constructor(private application: UserApplication) {
@@ -85,7 +85,6 @@ export default class {
 			const result = new UserUpdateMapping().execute(dataResult.value.propierties())
 			res.json(result)
 		}
-
 	}
 
 	async delete(req: Request, res: Response, next: NextFunction) {
@@ -106,7 +105,4 @@ export default class {
 			res.json(result)
 		}
 	}
-
-
-
 }

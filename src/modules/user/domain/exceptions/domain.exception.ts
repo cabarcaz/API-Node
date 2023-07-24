@@ -10,8 +10,8 @@ export enum DomainExceptionCode {
 	USER_NOT_FOUND = 'USER_NOT_FOUND',
 }
 
-export abstract class DomainException extends Error{
-	constructor(message: string){
+export abstract class DomainException extends Error {
+	constructor(message: string) {
 		super(message)
 		this.name = DomainExceptionCode.DEFAULT_DOMAIN_EXCEPTION
 	}

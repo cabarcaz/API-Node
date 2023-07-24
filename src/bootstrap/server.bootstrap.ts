@@ -1,17 +1,16 @@
-import http from 'http';
-import { Application } from 'express';
-import { Bootstrap } from './base.bootstrap';
+import http from 'http'
+import { Application } from 'express'
+import { Bootstrap } from './base.bootstrap'
 
-export default class extends Bootstrap{
-
-	constructor(private readonly app: Application){
+export default class extends Bootstrap {
+	constructor(private readonly app: Application) {
 		super()
 	}
 
 	//? Principio SOLID: Liskov Sustitution.
 	//? Principio SOLID: Single Responsability
 	initialize() {
-		return new Promise<string | Error>((resolve, reject) =>{
+		return new Promise<string | Error>((resolve, reject) => {
 			const server = http.createServer(this.app)
 			server
 				.listen(3000)
