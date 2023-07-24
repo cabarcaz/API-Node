@@ -1,6 +1,7 @@
 import http from 'http'
 import { Application } from 'express'
 import { Bootstrap } from './base.bootstrap'
+import { AppServive } from './services/app.service'
 
 export default class extends Bootstrap {
 	constructor(private readonly app: Application) {
@@ -10,17 +11,16 @@ export default class extends Bootstrap {
 	//? Principio SOLID: Liskov Sustitution.
 	//? Principio SOLID: Single Responsability
 	initialize() {
-		return new Promise<string | Error>((resolve, reject) => {
+		return new Promise<string | Error>((_resolve, reject) => {
 			const server = http.createServer(this.app)
 			server
-				.listen(3000)
+				.listen(`${AppServive.PORT}`)
 				.on('listening', () => {
-					resolve('Promise resolved successfully')
-					console.log('listening on port 3000')
+					console.log(`Server listening on port: ${AppServive.PORT}`)
 				})
 				.on('error', error => {
 					reject(error)
-					console.log('error on port 3000')
+					console.log(`Server error: ${AppServive.PORT}`)
 				})
 		})
 	}
